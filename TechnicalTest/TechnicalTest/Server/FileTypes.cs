@@ -1,4 +1,4 @@
-﻿namespace TechnicalTest.Server.Services
+﻿namespace TechnicalTest.Server
 {
     internal class FileTypes
     {

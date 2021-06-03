@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
-using TechnicalTest.Server.Services;
+using TechnicalTest.Server;
 using TechnicalTest.Shared;
 
 namespace TechnicalTest.Tests

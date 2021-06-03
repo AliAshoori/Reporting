@@ -5,7 +5,7 @@ using Moq;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using TechnicalTest.Server.Services;
+using TechnicalTest.Server;
 
 namespace TechnicalTest.Tests
 {

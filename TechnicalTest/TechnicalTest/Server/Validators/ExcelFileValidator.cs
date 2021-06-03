@@ -3,7 +3,7 @@ using System.IO;
 using System;
 using TechnicalTest.Shared;
 
-namespace TechnicalTest.Server.Services
+namespace TechnicalTest.Server
 {
     public interface IExcelFileValidator
     {

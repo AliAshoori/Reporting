@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace TechnicalTest.Server.Services
+namespace TechnicalTest.Server
 {
     public interface IExcelToDataTableParser
     {

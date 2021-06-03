@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TechnicalTest.Server.Services
+namespace TechnicalTest.Server
 {
     public interface IFileValidator
     {

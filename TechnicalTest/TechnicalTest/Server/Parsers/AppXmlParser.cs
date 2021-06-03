@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using TechnicalTest.Shared;
 
-namespace TechnicalTest.Server.Services
+namespace TechnicalTest.Server
 {
     public interface IAppXmlParser
     {
