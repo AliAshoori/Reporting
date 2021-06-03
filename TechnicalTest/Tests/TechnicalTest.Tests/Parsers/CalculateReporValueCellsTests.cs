@@ -98,6 +98,71 @@ namespace TechnicalTest.Tests
         }
 
         [TestMethod]
+        public async Task Calculate_WithRowIndexesOnTheRight_ReturnsReportValueCells()
+        {
+            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
+            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
+            mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
+
+            var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
+
+            var expected = new List<ReportValueCell>
+            {
+                new ReportValueCell
+                {
+                    Value = "010", Row  = 9, Column = 4
+                },
+                new ReportValueCell
+                {
+                    Value = "011", Row  = 9, Column = 5
+                },
+                new ReportValueCell
+                {
+                    Value = "012", Row  = 9, Column = 6
+                },
+                new ReportValueCell
+                {
+                    Value = "022", Row  = 9, Column = 7
+                },
+                new ReportValueCell
+                {
+                    Value = "025", Row  = 9, Column = 8
+                },
+                new ReportValueCell
+                {
+                    Value = "031", Row  = 9, Column = 9
+                },
+                new ReportValueCell
+                {
+                    Value = "040", Row  = 9, Column = 10
+                },
+                new ReportValueCell
+                {
+                    Value = "010", Row  = 11, Column = 10
+                },
+                new ReportValueCell
+                {
+                    Value = "020", Row  = 11, Column = 11
+                }
+            };
+
+            var actual = Enumerable.Empty<ReportValueCell>();
+
+            var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            _memoryStream = new MemoryStream(file);
+            _excelPackage = new ExcelPackage(_memoryStream);
+            var worksheet = _excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "WithRowsIndexOnTheRight");
+
+            // Act
+            actual = calculator.Calculate(worksheet);
+
+            // Assert
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
         public async Task Calculate_WithNoUserDefinedIndexCellsFound_ThrowsException()
         {
             // Arrange
