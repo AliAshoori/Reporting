@@ -45,27 +45,6 @@ namespace TechnicalTest.Tests
         }
 
         [TestMethod]
-        public void Parse_WithEmptyDataTable_ReturnsEmptyHtmlRawW()
-        {
-            // Arrange
-            var mockLogger = new Mock<ILogger<DataTableToRawHtmlParser>>();
-            var mockValidator = new Mock<IDataTableToRawHtmlParserValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<DataTable>())).Verifiable();
-
-            DataTable table = new DataTable();
-
-            var parser = new DataTableToRawHtmlParser(mockLogger.Object, mockValidator.Object);
-
-            var expected = string.Empty;
-
-            // Act
-            var actual = parser.Parse(table);
-
-            // Assert
-            actual.Should().BeEquivalentTo(expected);
-        }
-
-        [TestMethod]
         public void DataTableToRawHtmlParser_WithNullLogger_ThrowsArgumentNullException()
         {
             // Arrange
