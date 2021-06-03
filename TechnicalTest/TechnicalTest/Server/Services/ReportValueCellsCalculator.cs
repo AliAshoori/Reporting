@@ -40,7 +40,7 @@ namespace TechnicalTest.Server.Services
                     if (!string.IsNullOrWhiteSpace(currentCellValue) &&
                         currentCellValue.ToCharArray().All(c => char.IsDigit(c)))
                     {
-                        var element = new ReportValueCell { Value = currentCellValue, Row = i, Column = j };
+                        var element = new ReportValueCell { Value = currentCellValue, Row = i.ExcelifyTheIndex(), Column = j.ExcelifyTheIndex() };
                         targetCells = targetCells.Append(element);
                     }
                 }
