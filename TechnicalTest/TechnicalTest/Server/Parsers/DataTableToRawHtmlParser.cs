@@ -26,6 +26,8 @@ namespace TechnicalTest.Server
 
         public string Parse(DataTable dataTable)
         {
+            _validator.Validate(dataTable);
+
             _logger.LogInformation($"Now geenrating RAW HTML from data table. Rows: {dataTable.Rows.Count}, Columns: {dataTable.Columns.Count}");
 
             var rawHtml = new StringBuilder();
