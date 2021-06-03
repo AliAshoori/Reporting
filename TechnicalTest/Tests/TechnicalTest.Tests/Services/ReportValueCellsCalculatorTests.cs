@@ -37,7 +37,6 @@ namespace TechnicalTest.Tests
         {
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
             var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
@@ -102,7 +101,6 @@ namespace TechnicalTest.Tests
         {
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
             var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
@@ -168,7 +166,6 @@ namespace TechnicalTest.Tests
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
             var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
