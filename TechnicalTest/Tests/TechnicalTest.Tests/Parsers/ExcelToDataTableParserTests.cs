@@ -18,7 +18,7 @@ namespace TechnicalTest.Tests
         public void ParseToDataTable_HappyScenario_ReturnsDataTable()
         {
             // Arrange
-            var file = new FileInfo("Data/HappyScenarioExcelReport.xlsx");
+            var file = new FileInfo("Data/ExcelReport.xlsx");
             const string sheetName = "F 20.04";
 
             var mockValidator = new Mock<IExcelFileValidator>();
@@ -61,8 +61,8 @@ namespace TechnicalTest.Tests
         public void ParseToDataTable_WithEmptyFile_ReturnsEmptyDataTable()
         {
             // Arrange
-            var file = new FileInfo("Data/EmptyFile.xlsx");
-            const string sheetName = "F 20.04";
+            var file = new FileInfo("Data/ExcelReport.xlsx");
+            const string sheetName = "EMPTY";
 
             var mockValidator = new Mock<IExcelFileValidator>();
             mockValidator.Setup(m => m.ValidateDataSourceFile(file, sheetName)).Verifiable();
