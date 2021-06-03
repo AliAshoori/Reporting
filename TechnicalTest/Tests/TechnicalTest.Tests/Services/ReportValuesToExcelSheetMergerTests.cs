@@ -47,7 +47,7 @@ namespace TechnicalTest.Tests
                 ReportSheetName = "F 20.04",
                 ReportTemplateFileAddress = "Data/ExcelReport.xlsx",
                 ReportValueFileAddress = "Data/HappyScenarioReport.xml",
-                MergedReportFileName = "Data/ExcelReport-Merged.xlsx"
+                MergedReportFileAddress = "Data/ExcelReport-Merged.xlsx"
             });
 
             var merger = new ReportValuesToExcelSheetMerger(mockLogger.Object, mockValidator.Object, options);

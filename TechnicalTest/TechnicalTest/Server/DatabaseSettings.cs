@@ -8,6 +8,6 @@
 
         public string ReportSheetName { get; set; }
 
-        public string MergedReportFileName { get; set; }
+        public string MergedReportFileAddress { get; set; }
     }
 }

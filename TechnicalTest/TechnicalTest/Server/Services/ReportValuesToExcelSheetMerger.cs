@@ -68,7 +68,7 @@ namespace TechnicalTest.Server.Services
                     mergePayload.WorkSheet.Cells[reportValueCell.Row, reportValueCell.Column].Value = reportValueCell.Value;
                 }
 
-                FileInfo mergedFile = new FileInfo(_options.Value.MergedReportFileName);
+                FileInfo mergedFile = new FileInfo(_options.Value.MergedReportFileAddress);
 
                 _logger.LogInformation($"Now writing down the merge result into excel sheet {mergedFile.FullName}");
 

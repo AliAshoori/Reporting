@@ -54,7 +54,7 @@ namespace TechnicalTest.Tests
                 ReportSheetName = "F 20.04",
                 ReportTemplateFileAddress = "Data/ExcelReport.xlsx",
                 ReportValueFileAddress = "Data/HappyScenarioReport.xml",
-                MergedReportFileName = "Data/ExcelReport-Merged.xlsx"
+                MergedReportFileAddress = "Data/ExcelReport-Merged.xlsx"
             });
 
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
@@ -67,7 +67,7 @@ namespace TechnicalTest.Tests
             mockCellCalculator.Setup(m => m.Calculate(worksheet)).Returns(targetCells);
 
             var mockMerger = new Mock<IReportValuesToExcelSheetMerger>();
-            mockMerger.Setup(m => m.MergeAsync(It.IsAny<ReportMergePayload>())).ReturnsAsync(new FileInfo(options.Value.MergedReportFileName));
+            mockMerger.Setup(m => m.MergeAsync(It.IsAny<ReportMergePayload>())).ReturnsAsync(new FileInfo(options.Value.MergedReportFileAddress));
 
             var generator = new ReportGenerator(
                 mockLogger.Object,
