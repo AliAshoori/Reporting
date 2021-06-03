@@ -19,6 +19,19 @@ namespace TechnicalTest.Tests
     [TestClass]
     public class ReportValueCellsCalculatorTests
     {
+        MemoryStream _memoryStream;
+        ExcelPackage _excelPackage;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            if (_memoryStream != null)
+                _memoryStream.Dispose();
+
+            if (_excelPackage != null)
+                _excelPackage.Dispose();
+        }
+
         [TestMethod]
         public async Task Calculate_HappyScenario_ReturnsReportValueCells()
         {
@@ -73,15 +86,12 @@ namespace TechnicalTest.Tests
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+            _memoryStream = new MemoryStream(file);
+            _excelPackage = new ExcelPackage(_memoryStream);
+            var worksheet = _excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "F 20.04");
+
             // Act
-            using (MemoryStream memoryStream = new MemoryStream(file))
-            {
-                using (ExcelPackage excelPackage = new ExcelPackage(memoryStream))
-                {
-                    var worksheet = excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "F 20.04");
-                    actual = calculator.Calculate(worksheet);
-                }
-            }
+            actual = calculator.Calculate(worksheet);
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
@@ -103,15 +113,12 @@ namespace TechnicalTest.Tests
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+            _memoryStream = new MemoryStream(file);
+            _excelPackage = new ExcelPackage(_memoryStream);
+            var worksheet = _excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "WithNoUserDefinedIndex");
+
             // Act
-            using (MemoryStream memoryStream = new MemoryStream(file))
-            {
-                using (ExcelPackage excelPackage = new ExcelPackage(memoryStream))
-                {
-                    var worksheet = excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "WithNoUserDefinedIndex");
-                    actual = calculator.Calculate(worksheet);
-                }
-            }
+            actual = calculator.Calculate(worksheet);
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
