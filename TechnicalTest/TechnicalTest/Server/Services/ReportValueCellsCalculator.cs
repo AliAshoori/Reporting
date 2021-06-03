@@ -2,12 +2,13 @@
 using OfficeOpenXml;
 using TechnicalTest.Shared;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TechnicalTest.Server.Services
 {
     public interface IReportValueCellsCalculator
     {
-        IOrderedEnumerable<ReportValueCell> Calculate(ExcelWorksheet worksheet);
+        IEnumerable<ReportValueCell> Calculate(ExcelWorksheet worksheet);
     }
 
     public class ReportValueCellsCalculator : IReportValueCellsCalculator
@@ -21,7 +22,7 @@ namespace TechnicalTest.Server.Services
             _validator = validator.NotNull();
         }
 
-        public IOrderedEnumerable<ReportValueCell> Calculate(ExcelWorksheet worksheet)
+        public IEnumerable<ReportValueCell> Calculate(ExcelWorksheet worksheet)
         {
             _validator.Validate(worksheet);
 

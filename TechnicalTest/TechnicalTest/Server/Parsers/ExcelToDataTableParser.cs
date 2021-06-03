@@ -48,6 +48,8 @@ namespace TechnicalTest.Server
                     dataTable = excelDataSet.Tables[0];
                 }
 
+                _logger.LogInformation($"Successfully convert excel file {file.Name} into data table. Rows: {dataTable.Rows.Count}, Columns: {dataTable.Columns.Count}");
+
                 return dataTable;
             }
             catch (Exception exception)

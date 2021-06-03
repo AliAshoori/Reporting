@@ -42,7 +42,7 @@ namespace TechnicalTest.Server
                 throw new InvalidOperationException($"{nameof(ReportMergePayload)} validation failed. No target rows/columns detected.");
             }
 
-            if (payload.ReportValues == null || !payload.ReportValues.Any())
+            if (payload.XmlReportRoot == null || payload.XmlReportRoot.Report == null || !payload.XmlReportRoot.Report.Items.Any())
             {
                 throw new InvalidOperationException($"{nameof(ReportMergePayload)} validation failed. No report values found.");
             }

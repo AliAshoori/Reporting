@@ -11,18 +11,18 @@ namespace TechnicalTest.Shared
             ExcelWorksheet workSheet,
             ExcelPackage package,
             IEnumerable<ReportValueCell> cells,
-            IEnumerable<XmlReportItem> reportValues)
+            XmlReportRoot xmlReportRoot)
         {
             WorkSheet = workSheet;
             Package = package;
             Cells = cells;
-            ReportValues = reportValues;
+            XmlReportRoot = xmlReportRoot;
         }
 
         public ExcelPackage Package { get; }
 
         public IEnumerable<ReportValueCell> Cells { get; }
 
-        public IEnumerable<XmlReportItem> ReportValues { get; }
+        public XmlReportRoot XmlReportRoot { get; }
     }
 }

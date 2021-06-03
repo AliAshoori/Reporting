@@ -70,7 +70,16 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = reportValues,
+                    Name = "Some_Name"
+                }
+            };
+
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             var validator = new ReportValuesToExcelSheetMergerValidator(mockLogger.Object);
 
@@ -121,9 +130,16 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reportValues = Enumerable.Empty<XmlReportItem>();
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = new List<XmlReportItem>(),
+                    Name = "Some_Name"
+                }
+            };
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             var validator = new ReportValuesToExcelSheetMergerValidator(mockLogger.Object);
 
@@ -158,9 +174,16 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reportValues = Enumerable.Empty<XmlReportItem>();
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = new List<XmlReportItem>(),
+                    Name = "Some_Name"
+                }
+            };
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             var validator = new ReportValuesToExcelSheetMergerValidator(mockLogger.Object);
 
@@ -203,9 +226,16 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reportValues = Enumerable.Empty<XmlReportItem>();
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = new List<XmlReportItem>(),
+                    Name = "Some_Name"
+                }
+            };
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             var validator = new ReportValuesToExcelSheetMergerValidator(mockLogger.Object);
 
@@ -249,9 +279,16 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reportValues = Enumerable.Empty<XmlReportItem>();
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = new List<XmlReportItem>(),
+                    Name = "Some_Name"
+                }
+            };
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             var validator = new ReportValuesToExcelSheetMergerValidator(mockLogger.Object);
 

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OfficeOpenXml;
@@ -41,7 +42,15 @@ namespace TechnicalTest.Tests
             var mockValidator = new Mock<IReportValuesToExcelSheetMergerValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ReportMergePayload>())).Verifiable();
 
-            var merger = new ReportValuesToExcelSheetMerger(mockLogger.Object, mockValidator.Object);
+            var options = Options.Create(new DatabaseSettings
+            {
+                ReportSheetName = "F 20.04",
+                ReportTemplateFileAddress = "Data/ExcelReport.xlsx",
+                ReportValueFileAddress = "Data/HappyScenarioReport.xml",
+                MergedReportFileName = "Data/ExcelReport-Merged.xlsx"
+            });
+
+            var merger = new ReportValuesToExcelSheetMerger(mockLogger.Object, mockValidator.Object, options);
 
             var cells = new List<ReportValueCell>
             {
@@ -111,6 +120,15 @@ namespace TechnicalTest.Tests
                         }
                     };
 
+            var reportRoot = new XmlReportRoot
+            {
+                Report = new XmlReport
+                {
+                    Items = reportValues,
+                    Name = "Some_Name"
+                }
+            };
+
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -118,7 +136,7 @@ namespace TechnicalTest.Tests
             _excelPackage = new ExcelPackage(_memoryStream);
             var worksheet = _excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "F 20.04");
 
-            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportRoot);
 
             // Act
             Func<Task> mergeFunction = async () => await merger.MergeAsync(payload);
@@ -128,31 +146,48 @@ namespace TechnicalTest.Tests
         }
 
         [TestMethod]
-        public void ReportValuesToExcelSheetMerger_WithNoLogger_ThrowsArgumentNullException()
+        public void ReportValuesToExcelSheetMerger_WithNullLogger_ThrowsArgumentNullException()
         {
             // Arrange
             ILogger<ReportValuesToExcelSheetMerger> logger = null;
             var mockValidator = new Mock<IReportValuesToExcelSheetMergerValidator>();
+            var options = Options.Create(new DatabaseSettings());
 
             // Act
-            Action initFunction = () => new ReportValuesToExcelSheetMerger(logger, mockValidator.Object);
+            Action initFunction = () => new ReportValuesToExcelSheetMerger(logger, mockValidator.Object, options);
 
             // Assert
             initFunction.Should().ThrowExactly<ArgumentNullException>(nameof(logger));
         }
 
         [TestMethod]
-        public void ReportValuesToExcelSheetMerger_WithNoValidator_ThrowsArgumentNullException()
+        public void ReportValuesToExcelSheetMerger_WithNullValidator_ThrowsArgumentNullException()
         {
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValuesToExcelSheetMerger>>();
             IReportValuesToExcelSheetMergerValidator validator = null;
+            var options = Options.Create(new DatabaseSettings());
 
             // Act
-            Action initFunction = () => new ReportValuesToExcelSheetMerger(mockLogger.Object, validator);
+            Action initFunction = () => new ReportValuesToExcelSheetMerger(mockLogger.Object, validator, options);
 
             // Assert
             initFunction.Should().ThrowExactly<ArgumentNullException>(nameof(validator));
+        }
+
+        [TestMethod]
+        public void ReportValuesToExcelSheetMerger_WithNullOptions_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var mockLogger = new Mock<ILogger<ReportValuesToExcelSheetMerger>>();
+            var mockValidator = new Mock<IReportValuesToExcelSheetMergerValidator>();
+            IOptions<DatabaseSettings> options = null;
+
+            // Act
+            Action initFunction = () => new ReportValuesToExcelSheetMerger(mockLogger.Object, mockValidator.Object, options);
+
+            // Assert
+            initFunction.Should().ThrowExactly<ArgumentNullException>(nameof(options));
         }
     }
 }

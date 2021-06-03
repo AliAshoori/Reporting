@@ -32,9 +32,12 @@ namespace TechnicalTest.Server
 
             try
             {
-                using var streamReader = new StreamReader(file.FullName);
-                var reader = XmlReader.Create(streamReader, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Document });
-                return Task.FromResult(new XmlSerializer(typeof(XmlReportRoot)).Deserialize(reader) as XmlReportRoot);
+                using (var streamReader = new StreamReader(file.FullName))
+                {
+                    var reader = XmlReader.Create(streamReader, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Document });
+                    
+                    return Task.FromResult(new XmlSerializer(typeof(XmlReportRoot)).Deserialize(reader) as XmlReportRoot);
+                }
             }
             catch (Exception exception)
             {
