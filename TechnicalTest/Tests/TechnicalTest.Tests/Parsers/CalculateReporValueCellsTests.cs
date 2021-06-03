@@ -14,16 +14,16 @@ namespace TechnicalTest.Tests
 {
     [ExcludeFromCodeCoverage]
     [TestClass]
-    public class ReporValueCellsCalculatorTests
+    public class ReportValueCellsCalculatorTests
     {
         [TestMethod]
         public async Task Calculate_HappyScenario_ReturnsReportValueCells()
         {
-            var mockLogger = new Mock<ILogger<ReporValueCellsCalculator>>();
-            var mockValidator = new Mock<ReporValueCellsCalculatorValidator>();
+            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
+            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
-            var calculator = new ReporValueCellsCalculator(mockLogger.Object, mockValidator.Object);
+            var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
             var expected = new List<ReportValueCell>
             {
@@ -88,11 +88,11 @@ namespace TechnicalTest.Tests
         public async Task Calculate_WithNoUserDefinedIndexCellsFound_ThrowsException()
         {
             // Arrange
-            var mockLogger = new Mock<ILogger<ReporValueCellsCalculator>>();
-            var mockValidator = new Mock<ReporValueCellsCalculatorValidator>();
+            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
+            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
-            var calculator = new ReporValueCellsCalculator(mockLogger.Object, mockValidator.Object);
+            var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
             var expected = Enumerable.Empty<ReportValueCell>();
 
@@ -117,11 +117,11 @@ namespace TechnicalTest.Tests
         public void Calculate_WithValidationFails_ThrowsArgumentNullException()
         {
             // Arrange
-            var mockLogger = new Mock<ILogger<ReporValueCellsCalculator>>();
-            var mockValidator = new Mock<ReporValueCellsCalculatorValidator>();
+            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
+            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Throws<ArgumentNullException>();
 
-            var calculator = new ReporValueCellsCalculator(mockLogger.Object, mockValidator.Object);
+            var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
             var mockWorksheet = new Mock<ExcelWorksheet>();
 
             // Act
@@ -132,28 +132,28 @@ namespace TechnicalTest.Tests
         }
 
         [TestMethod]
-        public void ReporValueCellsCalculator_WithNullLogger_ThrowsArgumentNullException()
+        public void ReportValueCellsCalculator_WithNullLogger_ThrowsArgumentNullException()
         {
             // Arrange
-            ILogger<ReporValueCellsCalculator> logger = null;
-            var mockValidator = new Mock<ReporValueCellsCalculatorValidator>();
+            ILogger<ReportValueCellsCalculator> logger = null;
+            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
 
             // Act
-            Action Init = () => new ReporValueCellsCalculator(logger, mockValidator.Object);
+            Action Init = () => new ReportValueCellsCalculator(logger, mockValidator.Object);
 
             // Assert
             Init.Should().ThrowExactly<ArgumentNullException>(nameof(logger));
         }
 
         [TestMethod]
-        public void ReporValueCellsCalculator_WithNullValidator_ThrowsArgumentNullException()
+        public void ReportValueCellsCalculator_WithNullValidator_ThrowsArgumentNullException()
         {
             // Arrange
-            var mockLogger = new Mock<ILogger<ReporValueCellsCalculator>>();
-            IReporValueCellsCalculator validator = null;
+            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
+            IReportValueCellsCalculator validator = null;
 
             // Act
-            Action Init = () => new ReporValueCellsCalculator(mockLogger.Object, validator);
+            Action Init = () => new ReportValueCellsCalculator(mockLogger.Object, validator);
 
             // Assert
             Init.Should().ThrowExactly<ArgumentNullException>(nameof(validator));
