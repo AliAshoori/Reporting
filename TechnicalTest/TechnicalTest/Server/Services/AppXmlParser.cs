@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using TechnicalTest.Shared;
 
 namespace TechnicalTest.Server.Services
@@ -23,7 +26,21 @@ namespace TechnicalTest.Server.Services
 
         public Task<XmlReportRoot> ParseAsync(FileInfo file)
         {
-            throw new System.NotImplementedException();
+            _xmlFileValidator.ValidateFileTypeDataSourceFile(file);
+
+            _logger.LogInformation($"Reading Asset Reports from XML data source: {file.FullName}");
+
+            try
+            {
+                using var streamReader = new StreamReader(file.FullName);
+                var reader = XmlReader.Create(streamReader, new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Document });
+                return Task.FromResult(new XmlSerializer(typeof(XmlReportRoot)).Deserialize(reader) as XmlReportRoot);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"{exception}");
+                throw;
+            }
         }
     }
 }

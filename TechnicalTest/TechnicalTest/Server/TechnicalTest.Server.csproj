@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+	  <PackageReference Include="System.Data.Oledb" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
