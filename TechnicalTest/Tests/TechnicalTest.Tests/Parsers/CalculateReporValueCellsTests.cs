@@ -45,39 +45,39 @@ namespace TechnicalTest.Tests
             {
                 new ReportValueCell
                 {
-                    Value = "010", Row  = 9, Column = 4
+                    Value = "010", Row  = 10, Column = 5
                 },
                 new ReportValueCell
                 {
-                    Value = "011", Row  = 9, Column = 5
+                    Value = "011", Row  = 10, Column = 6
                 },
                 new ReportValueCell
                 {
-                    Value = "012", Row  = 9, Column = 6
+                    Value = "012", Row  = 10, Column = 7
                 },
                 new ReportValueCell
                 {
-                    Value = "022", Row  = 9, Column = 7
+                    Value = "022", Row  = 10, Column = 8
                 },
                 new ReportValueCell
                 {
-                    Value = "025", Row  = 9, Column = 8
+                    Value = "025", Row  = 10, Column = 9
                 },
                 new ReportValueCell
                 {
-                    Value = "031", Row  = 9, Column = 9
+                    Value = "031", Row  = 10, Column = 10
                 },
                 new ReportValueCell
                 {
-                    Value = "040", Row  = 9, Column = 10
+                    Value = "040", Row  = 10, Column = 11
                 },
                 new ReportValueCell
                 {
-                    Value = "010", Row  = 10, Column = 1
+                    Value = "010", Row  = 11, Column = 2
                 },
                 new ReportValueCell
                 {
-                    Value = "020", Row  = 11, Column = 1
+                    Value = "020", Row  = 12, Column = 2
                 }
             };
 
@@ -110,39 +110,39 @@ namespace TechnicalTest.Tests
             {
                 new ReportValueCell
                 {
-                    Value = "010", Row  = 9, Column = 4
+                    Value = "010", Row  = 10, Column = 5
                 },
                 new ReportValueCell
                 {
-                    Value = "011", Row  = 9, Column = 5
+                    Value = "011", Row  = 10, Column = 6
                 },
                 new ReportValueCell
                 {
-                    Value = "012", Row  = 9, Column = 6
+                    Value = "012", Row  = 10, Column = 7
                 },
                 new ReportValueCell
                 {
-                    Value = "022", Row  = 9, Column = 7
+                    Value = "022", Row  = 10, Column = 8
                 },
                 new ReportValueCell
                 {
-                    Value = "025", Row  = 9, Column = 8
+                    Value = "025", Row  = 10, Column = 9
                 },
                 new ReportValueCell
                 {
-                    Value = "031", Row  = 9, Column = 9
+                    Value = "031", Row  = 10, Column = 10
                 },
                 new ReportValueCell
                 {
-                    Value = "040", Row  = 9, Column = 10
+                    Value = "040", Row  = 10, Column = 11
                 },
                 new ReportValueCell
                 {
-                    Value = "010", Row  = 11, Column = 10
+                    Value = "010", Row  = 11, Column = 12
                 },
                 new ReportValueCell
                 {
-                    Value = "020", Row  = 11, Column = 11
+                    Value = "020", Row  = 12, Column = 12
                 }
             };
 
@@ -187,24 +187,6 @@ namespace TechnicalTest.Tests
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
-        }
-
-        [TestMethod]
-        public void Calculate_WithValidationFails_ThrowsArgumentNullException()
-        {
-            // Arrange
-            var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
-            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Throws<ArgumentNullException>();
-
-            var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
-            var mockWorksheet = new Mock<ExcelWorksheet>();
-
-            // Act
-            Action calculateFunction = () => calculator.Calculate(mockWorksheet.Object);
-
-            // Assert
-            calculateFunction.Should().ThrowExactly<ArgumentNullException>("worksheet");
         }
 
         [TestMethod]
