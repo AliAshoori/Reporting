@@ -2,45 +2,58 @@
 @using TechnicalTest.Shared
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
+<h1>Financial Report</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>The financial report generated dynamically.</p>
 
-@if (forecasts == null)
+@if (reportFinal == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    @((MarkupString)reportFinal.RawHtml)
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private ReportFinal reportFinal;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        reportFinal = await Http.GetFromJsonAsync<ReportFinal>("Report/Generate");
+    }
+}
+
+
+<style type="text/css">
+    .report-table {
+        width: 100% !important;
+        display: inline-block !important;
+        font-size: 12px;
+        background-color: aliceblue !important;
     }
 
-}
+        .report-table .report-table-row {
+            border-bottom: 1px solid #c5c5c5 !important;
+        }
+
+            .report-table .report-table-row:hover {
+                cursor: pointer;
+                background-color: #ffff99;
+            }
+
+        .report-table tbody tr td {
+            padding: 5px !important;
+            text-align: center !important;
+        }
+
+        .report-table .header-style {
+            font-weight: bold !important;
+            font-size: 12px !important;
+        }
+
+        .report-table .merge-style {
+            content: '' !important;
+        }
+</style>
