@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -6,20 +7,21 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
+using TechnicalTest.Server.Services;
 using TechnicalTest.Shared;
 
 namespace TechnicalTest.Tests
 {
     [ExcludeFromCodeCoverage]
     [TestClass]
-    public class XmlParserTests
+    public class AppXmlParserTests
     {
         [TestMethod]
         public async Task ReadAsync_HappyScenario_ReturnsReportValues()
         {
             // Arrange
             var file = new FileInfo("Data/HappyScenarioReport.xml");
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
 
             var mockXmlValidator = new Mock<IXmlFileValidator>();
             mockXmlValidator.Setup(m => m.ValidateFileTypeDataSourceFile(file)).Verifiable();
@@ -37,7 +39,7 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reader = new XmlParser(mockLogger.Object, mockXmlValidator.Object);
+            var reader = new AppXmlParser(mockLogger.Object, mockXmlValidator.Object);
 
             // Act
             var result = await reader.ParseAsync(file);
@@ -51,12 +53,12 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var file = new FileInfo("Data/ElementMissingValue.xml");
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
 
             var mockXmlValidator = new Mock<IXmlFileValidator>();
             mockXmlValidator.Setup(m => m.ValidateFileTypeDataSourceFile(file)).Verifiable();
 
-            var reader = new XmlParser(mockLogger.Object, mockXmlValidator.Object);
+            var reader = new AppXmlParser(mockLogger.Object, mockXmlValidator.Object);
 
             // Act
             Func<Task<XmlReportRoot>> readFunction = async () => await reader.ParseAsync(file);
@@ -70,12 +72,12 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var file = new FileInfo("Data/UnExpectedDataTypeReport.xml");
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
 
             var mockXmlValidator = new Mock<IXmlFileValidator>();
             mockXmlValidator.Setup(m => m.ValidateFileTypeDataSourceFile(file)).Verifiable();
 
-            var reader = new XmlParser(mockLogger.Object, mockXmlValidator.Object);
+            var reader = new AppXmlParser(mockLogger.Object, mockXmlValidator.Object);
 
             // Act
             Func<Task<XmlReportRoot>> readFunction = async () => await reader.ParseAsync(file);
@@ -89,7 +91,7 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var file = new FileInfo("Data/UnExpectedElementReport.xml");
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
 
             var mockXmlValidator = new Mock<IXmlFileValidator>();
             mockXmlValidator.Setup(m => m.ValidateFileTypeDataSourceFile(file)).Verifiable();
@@ -107,7 +109,7 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            var reader = new XmlParser(mockLogger.Object, mockXmlValidator.Object);
+            var reader = new AppXmlParser(mockLogger.Object, mockXmlValidator.Object);
 
             // Act
             var result = await reader.ParseAsync(file);
@@ -121,12 +123,12 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var file = new FileInfo("Data/EmptyReport.xml");
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
 
             var mockXmlValidator = new Mock<IXmlFileValidator>();
             mockXmlValidator.Setup(m => m.ValidateFileTypeDataSourceFile(file)).Verifiable();
 
-            var reader = new XmlParser(mockLogger.Object, mockXmlValidator.Object);
+            var reader = new AppXmlParser(mockLogger.Object, mockXmlValidator.Object);
 
             var expected = new XmlReportRoot { Report = null };
 
@@ -141,11 +143,11 @@ namespace TechnicalTest.Tests
         public void AssetReportXmlReader_WithNullLoggerPassed_ThrowsArgumentNullException()
         {
             // Arrange
-            ILogger<XmlParser> logger = null;
+            ILogger<AppXmlParser> logger = null;
             var mockXmlValidator = new Mock<IXmlFileValidator>();
 
             // Act
-            Action Init = () => new XmlParser(logger, mockXmlValidator.Object);
+            Action Init = () => new AppXmlParser(logger, mockXmlValidator.Object);
 
             // Assert
             Init.Should().ThrowExactly<ArgumentNullException>(nameof(logger));
@@ -155,11 +157,11 @@ namespace TechnicalTest.Tests
         public void AssetReportXmlReader_WithNullValidatorPassed_ThrowsArgumentNullException()
         {
             // Arrange
-            var mockLogger = new Mock<ILogger<XmlParser>>();
+            var mockLogger = new Mock<ILogger<AppXmlParser>>();
             IXmlFileValidator xmlFileValidator = null;
 
             // Act
-            Action Init = () => new XmlParser(mockLogger.Object, xmlFileValidator);
+            Action Init = () => new AppXmlParser(mockLogger.Object, xmlFileValidator);
 
             // Assert
             Init.Should().ThrowExactly<ArgumentNullException>(nameof(xmlFileValidator));
