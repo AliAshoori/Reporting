@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TechnicalTest.Server;
+using TechnicalTest.Server.Services;
 using TechnicalTest.Shared;
 
 namespace TechnicalTest.Tests
@@ -37,7 +39,7 @@ namespace TechnicalTest.Tests
             var mockLogger = new Mock<ILogger<ReportValuesToExcelSheetMerger>>();
 
             var mockValidator = new Mock<IReportValuesToExcelSheetMergerValidator>();
-            mockValidator.Setup(m => m.Validate(It.IsAny<IEnumerable<ReportValueCell>>)).Verifiable();
+            mockValidator.Setup(m => m.Validate(It.IsAny<ReportMergePayload>())).Verifiable();
 
             var merger = new ReportValuesToExcelSheetMerger(mockLogger.Object, mockValidator.Object);
 
@@ -116,10 +118,10 @@ namespace TechnicalTest.Tests
             _excelPackage = new ExcelPackage(_memoryStream);
             var worksheet = _excelPackage.Workbook?.Worksheets.FirstOrDefault(w => w.Name == "F 20.04");
 
-            var payload = new ReportMergePayload(cells, reportValues, worksheet, _excelPackage);
+            var payload = new ReportMergePayload(worksheet, _excelPackage, cells, reportValues);
 
             // Act
-            Action mergeFunction = async () => await merger.MergeAsync(payload);
+            Func<Task> mergeFunction = async () => await merger.MergeAsync(payload);
 
             // Assert
             mergeFunction.Should().NotThrow();
@@ -144,7 +146,7 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValuesToExcelSheetMerger>>();
-            IReportValuesToExcelSheetMergerValidator validator = null
+            IReportValuesToExcelSheetMergerValidator validator = null;
 
             // Act
             Action initFunction = () => new ReportValuesToExcelSheetMerger(mockLogger.Object, validator);
