@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TechnicalTest\Shared\TechnicalTest.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\ElementMissingValue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
