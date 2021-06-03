@@ -9,6 +9,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TechnicalTest.Server;
+using TechnicalTest.Server.Services;
+using TechnicalTest.Shared;
 
 namespace TechnicalTest.Tests
 {
@@ -20,7 +23,7 @@ namespace TechnicalTest.Tests
         public async Task Calculate_HappyScenario_ReturnsReportValueCells()
         {
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
-            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
+            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
@@ -65,7 +68,7 @@ namespace TechnicalTest.Tests
                 }
             };
 
-            IEnumerable<ReportValueCell> actual = Enumerable.Empty<ReportValueCell>();
+            var actual = Enumerable.Empty<ReportValueCell>();
 
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -89,12 +92,13 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
-            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
+            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Verifiable();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
 
             var expected = Enumerable.Empty<ReportValueCell>();
+            var actual = Enumerable.Empty<ReportValueCell>();
 
             var file = await File.ReadAllBytesAsync("Data/ExcelReport.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -118,7 +122,7 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
-            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
+            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
             mockValidator.Setup(m => m.Validate(It.IsAny<ExcelWorksheet>())).Throws<ArgumentNullException>();
 
             var calculator = new ReportValueCellsCalculator(mockLogger.Object, mockValidator.Object);
@@ -136,7 +140,7 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             ILogger<ReportValueCellsCalculator> logger = null;
-            var mockValidator = new Mock<ReportValueCellsCalculatorValidator>();
+            var mockValidator = new Mock<IReportValueCellsCalculatorValidator>();
 
             // Act
             Action Init = () => new ReportValueCellsCalculator(logger, mockValidator.Object);
@@ -150,7 +154,7 @@ namespace TechnicalTest.Tests
         {
             // Arrange
             var mockLogger = new Mock<ILogger<ReportValueCellsCalculator>>();
-            IReportValueCellsCalculator validator = null;
+            IReportValueCellsCalculatorValidator validator = null;
 
             // Act
             Action Init = () => new ReportValueCellsCalculator(mockLogger.Object, validator);
