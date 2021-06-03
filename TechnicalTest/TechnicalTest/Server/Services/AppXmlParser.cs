@@ -20,8 +20,8 @@ namespace TechnicalTest.Server.Services
 
         public AppXmlParser(ILogger<AppXmlParser> logger, IXmlFileValidator xmlFileValidator)
         {
-            _logger = logger;
-            _xmlFileValidator = xmlFileValidator;
+            _logger = logger.NotNull();
+            _xmlFileValidator = xmlFileValidator.NotNull();
         }
 
         public Task<XmlReportRoot> ParseAsync(FileInfo file)
