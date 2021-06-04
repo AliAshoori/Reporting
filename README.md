@@ -10,8 +10,7 @@ Less hard coding so that solution is robust enough to handle a new template
 _Disclaimer: The main focus was on the back-end developement and to deliver a solution to avoid hard-coding when dealing with the files and to generate the report dynamically. Also, to follow TDD and keep the code coverage high. The UI representation may not look idea though_
 
 # Assumptions
-1. The solution assumes that the Template excel file _always_ comes with the user-defined indexes and based on which it merges the report values and generates the final report. As per assignment requirement. If the user-defined indexes are not provided, the report will not be generated.
-2. The solution work with a few different tempalte structure that can be also found in the test project. Basically, if the user-defined indexes are placed at the right side of the sheet. Or if, the rows are not provided, or if, there is not user-defined indexes. In the last two cases, the report will not be generated as the user-defined indexes are missing.
+The solution assumes that the Template excel file _always_ comes with the user-defined indexes and based on which it merges the report values and generates the final report. As per assignment requirement. If the user-defined indexes are not provided, the report will not be generated
 
 # Solution overview
 
