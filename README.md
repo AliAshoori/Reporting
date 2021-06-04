@@ -50,3 +50,8 @@ This project follows the default Visual Studio solution structure for blazor pro
 
 # Code Coverage against the server project where all the services and logics are hosted
 ![image](https://user-images.githubusercontent.com/7995157/120728525-066fcb00-c4d5-11eb-981f-227d32084dbd.png)
+
+# A screenshot from the generated report
+Un-handled UI part: The report does not ignore the repeated cells such as references. This can be handled by having a hash set to keep track of visited nodes when generating the raw html dynamically in service `DataTableToRawHtmlParser`.
+![image](https://user-images.githubusercontent.com/7995157/120767344-08587f00-c513-11eb-80e5-915921c3b2be.png)
+
