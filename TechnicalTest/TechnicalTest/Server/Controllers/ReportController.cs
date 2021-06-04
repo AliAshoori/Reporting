@@ -11,10 +11,7 @@ namespace TechnicalTest.Server.Controllers
     {
         private readonly IReportGenerator _reportGenerator;
 
-        public ReportController(IReportGenerator reportGenerator)
-        {
-            _reportGenerator = reportGenerator.NotNull();
-        }
+        public ReportController(IReportGenerator reportGenerator) => _reportGenerator = reportGenerator.NotNull();
 
         [HttpGet("Generate")]
         public async Task<IActionResult> GenerateAsync() => Accepted(await _reportGenerator.GenerateAsync());
