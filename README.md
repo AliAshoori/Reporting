@@ -1,13 +1,7 @@
 # Requirements
-.Net core Web project (Blazor/Angular/React) to read the excel and attached xml data and display on screen (if we can display with the style in excel).
+.Net core Web project (Blazor) to read excel and XML data and display on a screen. Some cool stuff with high code coverage - reading and merging data and generating HTML DOM dynamically.
 
-The template that needs to be read is “F 20.04” in the sheet and when merged with the data from the xml it should display the sheet as in “Final” tab.
-
-Consideration needs to be given to Unit test, DI, logging, change to template etc.
-
-Less hard coding so that solution is robust enough to handle a new template
-
-_Disclaimer: The main focus was on the back-end developement and to deliver a solution to avoid hard-coding when dealing with the files and to generate the report dynamically. Also, to follow TDD and keep the code coverage high. The UI representation may not look idea though_
+_The main focus was on the back-end developement and to deliver a solution to avoid hard-coding when dealing with the files and to generate the report dynamically. Also, to follow TDD and keep the code coverage high. The UI representation may not look idea though_
 
 # Assumptions
 The solution assumes that the Template excel file _always_ comes with the user-defined indexes and based on which it merges the report values and generates the final report. As per assignment requirement. If the user-defined indexes are not provided, the report will not be generated
